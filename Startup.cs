@@ -21,8 +21,12 @@ namespace LearningAspDotNetCoreMVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Use the exception handler to serve a custom error page
+            // (providing that the environment variable ASPNETCORE_ENVIRONMENT
+            // is set to "Development").
             app.UseExceptionHandler("/error.html");
             
+            // This determines whther the environment variable is set.
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -56,6 +60,7 @@ namespace LearningAspDotNetCoreMVC
             });
             */
 
+            // This code tests the error handling by throwing an exception.
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path.Value.Contains("/invalid"))
@@ -65,6 +70,8 @@ namespace LearningAspDotNetCoreMVC
                 await next();
             });
 
+            // UseFileServer is the method initialises static file hosting
+            // from the folder 'wwwroot'.
             app.UseFileServer();
         }
     }
