@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -12,6 +13,16 @@ namespace LearningAspDotNetCoreMVC
 {
     public class Startup
     {
+        // This allows us to access our own custom configuration settings
+        // within the class.
+        private readonly IConfiguration configuration;
+
+        // A constructor for the Startup object. .NET will populate this with
+        // its own confiuration object when the application starts.
+        public Startup(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -27,7 +38,16 @@ namespace LearningAspDotNetCoreMVC
             app.UseExceptionHandler("/error.html");
             
             // This determines whther the environment variable is set.
+            /*
             if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            */
+
+            // Alternatively we can use our own environment variable in
+            // conjunction with the configuration in the Startup object 
+            if (configuration.GetValue<bool>("EnableDeveloperExceptions")) 
             {
                 app.UseDeveloperExceptionPage();
             }
