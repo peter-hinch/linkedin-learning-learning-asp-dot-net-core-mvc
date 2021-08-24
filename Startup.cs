@@ -38,6 +38,7 @@ namespace LearningAspDotNetCoreMVC
             });
             */
 
+            /*
             app.Use(async (context, next) =>
             {
                 if(context.Request.Path.Value.StartsWith("/hello"))
@@ -51,6 +52,9 @@ namespace LearningAspDotNetCoreMVC
             {
                 await context.Response.WriteAsync("How are you?");
             });
+            */
+
+            app.UseFileServer();
         }
     }
 }
