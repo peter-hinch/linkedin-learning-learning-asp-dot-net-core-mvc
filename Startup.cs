@@ -87,8 +87,8 @@ namespace LearningAspDotNetCoreMVC
             {
                 // Specifying 'Home' will look for the HomeController.cs
                 // controller and the Index() action method.
-                // Note: A specific datatype can be specified for the id
-                // parameter e.g: {id:int?} - optional but must be int
+                // Note: Specific constraints can be specified for the URL
+                // parameters, e.g: {id:int?} - optional but must be int
                 endpoints.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
 
