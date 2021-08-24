@@ -27,10 +27,27 @@ namespace LearningAspDotNetCoreMVC
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // To tell ASP.NET how to instantiate the FeatureToggles class, use
+            // the AddScoped, AddSingleton or AddTransient methods when configuring
+            // the service:
+            // AddScoped - will only create one instance for each web request
+            // AddSingleton - to share across requests. one single instance
+            // AddTransient - short lifespan, a new instance each time requested
+
+            // We use an anonymous function to obtain the configuration data
+            services.AddTransient<FeatureToggles>(x => new FeatureToggles
+            {
+                DeveloperExceptions = configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        // This method gets called by the runtime. Use this method to configure
+        // the HTTP request pipeline. The features parameter brings in settings
+        // defined in the FeatureToggles class for use in the project. 
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            FeatureToggles features)
         {
             // Use the exception handler to serve a custom error page
             // (providing that the environment variable ASPNETCORE_ENVIRONMENT
@@ -54,7 +71,11 @@ namespace LearningAspDotNetCoreMVC
             // variable ASPNETCORE_ENVIRONMENT being set to "Development".
             // If this is the case, the appsettings.Development.json file
             // is read. If not, it uses appsettings.json for settings.
-            if (configuration.GetValue<bool>("FeatureToggles:EnableDeveloperExceptions")) 
+
+            // Now that there is a class containing the settings, we can
+            // access settings through a FeatureToggles object instantiated
+            // as 'features'.
+            if (features.DeveloperExceptions) 
             {
                 app.UseDeveloperExceptionPage();
             }
