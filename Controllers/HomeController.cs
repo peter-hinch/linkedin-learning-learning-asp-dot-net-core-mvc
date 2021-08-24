@@ -10,8 +10,7 @@ namespace LearningAspDotNetCoreMVC.Controllers
     {
         public IActionResult Index()
         {
-            return new ContentResult { Content = "Hello, ASP.NET Core MVC!" };
-            //return View();
+            return View();
         }
     }
 }
