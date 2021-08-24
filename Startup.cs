@@ -26,6 +26,7 @@ namespace LearningAspDotNetCoreMVC
                 app.UseDeveloperExceptionPage();
             }
 
+            /*
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -34,6 +35,21 @@ namespace LearningAspDotNetCoreMVC
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+            });
+            */
+
+            app.Use(async (context, next) =>
+            {
+                if(context.Request.Path.Value.StartsWith("/hello"))
+                {
+                    await context.Response.WriteAsync("Hello ASP.NET Core!");
+                }
+                await next();
+            });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("How are you?");
             });
         }
     }
