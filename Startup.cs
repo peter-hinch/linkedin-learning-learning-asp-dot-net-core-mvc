@@ -36,7 +36,7 @@ namespace LearningAspDotNetCoreMVC
             // (providing that the environment variable ASPNETCORE_ENVIRONMENT
             // is set to "Development").
             app.UseExceptionHandler("/error.html");
-            
+
             // This determines whther the environment variable is set.
             /*
             if (env.IsDevelopment())
@@ -46,8 +46,15 @@ namespace LearningAspDotNetCoreMVC
             */
 
             // Alternatively we can use our own environment variable in
-            // conjunction with the configuration in the Startup object 
-            if (configuration.GetValue<bool>("EnableDeveloperExceptions")) 
+            // conjunction with the configuration in the Startup object.
+            // The configuration API can navigate complex objects in the
+            // appsettings.json file (children are accesses using a : ).
+
+            // The configuration API will first look for the environment
+            // variable ASPNETCORE_ENVIRONMENT being set to "Development".
+            // If this is the case, the appsettings.Development.json file
+            // is read. If not, it uses appsettings.json for settings.
+            if (configuration.GetValue<bool>("FeatureToggles:EnableDeveloperExceptions")) 
             {
                 app.UseDeveloperExceptionPage();
             }
