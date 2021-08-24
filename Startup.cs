@@ -34,6 +34,9 @@ namespace LearningAspDotNetCoreMVC
             {
                 DeveloperExceptions = configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
             });
+
+            // Register the MCV design pattern.
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure
@@ -75,6 +78,16 @@ namespace LearningAspDotNetCoreMVC
                     throw new Exception("ERROR!");
                 }
                 await next();
+            });
+
+            // Assign the URL to be mapped when accessing the MVC pages
+            // - differs from course, using code from class instead.
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                // Specifying 'Home' will look for the HomeController.cs
+                // controller and the Index() action method.
+                endpoints.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
 
             // UseFileServer is the method initialises static file hosting
