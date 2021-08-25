@@ -110,6 +110,14 @@ namespace LearningAspDotNetCoreMVC.Controllers
         [HttpPost, Route("create")]
         public IActionResult Create(Post post)
         {
+            // Conditional logic can be added to determine whether the model
+            // state is valid, and how to proceed.
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            // Overwrite the fields that we do not wish the user to set themselves.
             post.Author = User.Identity.Name;
             post.Posted = DateTime.Now;
 

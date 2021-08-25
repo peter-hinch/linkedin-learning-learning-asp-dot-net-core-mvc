@@ -11,17 +11,27 @@
 <fieldset>
     @using (Html.BeginForm())
     {
+        @* The ValidationSumary method displays a summary of issues encountered
+           when validating the fields defined in the model class. *@
+        @Html.ValidationSummary()
+        
         <p>
             @Html.LabelFor(x => x.Title)
             @* When using the EditorFor method ASP.NET automatically chooses the
                most relevant input type to render to the page. *@
             @Html.EditorFor(x => x.Title)
+            @* Validation messages defined in the model class can be displayed
+               using the ValidationMessageFor method. *@
+            @Html.ValidationMessageFor(x => x.Title)
         </p>
         <p>
             @Html.LabelFor(x => x.Body)
-            @* Alternatively, you can specify the input type by using a more 
-               specific method such as TextAreaFor. *@
-            @Html.TextAreaFor(x => x.Body)
+            @* Alternatively, you can specify the input type by using a more
+               specific method such as TextAreaFor.
+            @Html.TextAreaFor(x => x.Body) *@
+            @* Now that the datatype is explicitly defined in the model, the
+               EditorFor method will achieve the same result. *@
+            @Html.ValidationMessageFor(x => x.Body)
         </p>
         <p>
             <button type="submit">Create Post</button>

@@ -221,6 +221,7 @@ body {
 	clear: both;
 }
 
+/* This is where field validation errors are styled. */
 .error, .field-validation-error, .validation-summary-errors {
 	color: #cb202a;
     font-weight: bold;
