@@ -1,4 +1,6 @@
-﻿@* Define the model which will be used by this view. *@
+﻿@* Include the TagHelpers to be used in this view. *@
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@* Define the model which will be used by this view. *@
 @model LearningAspDotNetCoreMVC.Models.Post
 
 @{
@@ -9,32 +11,61 @@
 <h1>Create Blog Post</h1>
 
 <fieldset>
-    @using (Html.BeginForm())
-    {
+    @* When using HtmlHelper, enclose a web form using the following:*@
+    @* @using (Html.BeginForm()){ } *@
+    
+    @* Alternatively, when using TagHelper use <form> tags 
+       with the asp-action and asp-controller attributes: *@
+    <form asp-action="Create" asp-controller="Blog">
+
+        @* Validation summary defined using HtmlHelper: *@
         @* The ValidationSumary method displays a summary of issues encountered
-           when validating the fields defined in the model class. *@
-        @Html.ValidationSummary()
-        
+        when validating the fields defined in the model class.
+        @Html.ValidationSummary() *@
+
+        <!-- Form validation summary using TagHelper -->
+        <!-- The summary is customisable - All, ModelOnly and None are accepted -->
+        <div asp-validation-summary="All" class="input-validation-error"></div>
+
         <p>
-            @Html.LabelFor(x => x.Title)
-            @* When using the EditorFor method ASP.NET automatically chooses the
-               most relevant input type to render to the page. *@
+            @* When using HtmlHelper, form fields can be defined as follows:*@
+            @*@Html.LabelFor(x => x.Title)
+
+            When using the EditorFor method ASP.NET automatically chooses the
+            most relevant input type to render to the page.
             @Html.EditorFor(x => x.Title)
-            @* Validation messages defined in the model class can be displayed
-               using the ValidationMessageFor method. *@
-            @Html.ValidationMessageFor(x => x.Title)
+
+            Validation messages defined in the model class can be displayed
+            using the ValidationMessageFor method.
+            @Html.ValidationMessageFor(x => x.Title) *@
+
+            <!-- Fields defined using TagHelper more closely resemble HTML syntax -->
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" placeholder="Blog post title" />
+            <span asp-validation-for="Title"></span>
         </p>
         <p>
-            @Html.LabelFor(x => x.Body)
-            @* Alternatively, you can specify the input type by using a more
-               specific method such as TextAreaFor.
-            @Html.TextAreaFor(x => x.Body) *@
-            @* Now that the datatype is explicitly defined in the model, the
-               EditorFor method will achieve the same result. *@
-            @Html.ValidationMessageFor(x => x.Body)
+            @*@Html.LabelFor(x => x.Body)
+
+            Alternatively, you can specify the input type by using a more
+            specific method such as TextAreaFor.
+            @Html.TextAreaFor(x => x.Body)
+
+            Now that the datatype is explicitly defined in the model, the
+            EditorFor method will achieve the same result.
+            @Html.ValidationMessageFor(x => x.Body) *@
+
+            <!-- Fields defined using TagHelper more closely resemble HTML syntax -->
+            <label asp-for="Body"></label>
+            <input asp-for="Body" class="form-control" placeholder="Blog post content" />
+            <span asp-validation-for="Body"></span>
+
+
         </p>
         <p>
+            <!-- There is no ASP.NET equivalent syntax for a button, it remains 
+                 the same as you would type it in regular HTML -->
             <button type="submit">Create Post</button>
         </p>
-    }
+    </form>
 </fieldset>
