@@ -63,8 +63,22 @@
             </nav>
         </header>
         <section id="actionCall">
-            <h1>Explore our world your way</h1>
-            <a href="/tours.htm" title="Find your tour!"><h2>Find your tour</h2></a>
+            <!-- RENDER SECTION CONTENT -->
+            <!-- The second parameter of RenderSection is optional and specifies
+                 whether all layouts need to include a definition for that section.
+                 Setting to false prevents an error if any page does not define
+                 the section 'header'. -->
+            <!-- IsSectionDefined allows logic to be applied depending on whether
+                 the section has been defined or not. Here default content is
+                 displayed if the section is not defined in individual views. -->
+            @if (IsSectionDefined("header"))
+            {
+                @RenderSection("header", false)
+            }
+            else
+            {
+                <h1>Explore our world your way</h1>
+            }
         </section>
         <div id="contentWrapper">
             <section id="mainContent">
