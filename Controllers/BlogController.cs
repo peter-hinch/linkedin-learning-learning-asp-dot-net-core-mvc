@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LearningAspDotNetCoreMVC.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,24 @@ namespace LearningAspDotNetCoreMVC.Controllers
         public IActionResult Post(int year, int month, string key)
         {
             // ViewBag allows content to be passed into views as key value pairs within
-            // a ViewBag dynamic object. This is convenient, but is not strictly typed. 
+            // a ViewBag dynamic object. This is convenient, but is not strongly typed. 
+            /*
             ViewBag.Title = "My Blog Post";
             ViewBag.Posted = DateTime.Now;
             ViewBag.Author = "Jess Chadwick";
             ViewBag.Body = "This is a great blog post, don't you think?";
-            
+            */
+
+            // Creating a new instance of the Post class allows us to add the same data
+            // as previously added using ViewBag, but it is now strongly typed.
+            var post = new Post
+            {
+                Title = "My blog post",
+                Posted = DateTime.Now,
+                Author = "Jess Chadwick",
+                Body = "This is a great blog post, don't you think?"
+            };
+
             /*
             return new ContentResult
             {
@@ -51,7 +64,7 @@ namespace LearningAspDotNetCoreMVC.Controllers
             };
             */
 
-            return View();
+            return View(post);
         }
     }
 }
