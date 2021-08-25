@@ -17,8 +17,8 @@ namespace LearningAspDotNetCoreMVC.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            return new ContentResult { Content = "Blog Posts" };
-            //return View();
+            //return new ContentResult { Content = "Blog Posts" };
+            return View();
         }
 
         // Passes the string from the URL in the 'id' portion to the action method:
