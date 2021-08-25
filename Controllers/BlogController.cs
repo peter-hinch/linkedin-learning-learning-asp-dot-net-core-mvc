@@ -67,9 +67,52 @@ namespace LearningAspDotNetCoreMVC.Controllers
             return View(post);
         }
 
-        [Route("create")]
+        // Adding the decorator keyword HttpGet signifies this action method will
+        // handle GET requests to this method. The parameters will still need to 
+        // be different for each action method for the application to compile.
+        [HttpGet, Route("create")]
         public IActionResult Create()
         {
+            return View();
+        }
+
+        // Adding the decorator keyword HttpPost signifies this action method will
+        // handle POST requests to this method. The parameters will still need to 
+        // be different for each action method for the application to compile.
+        /*
+        [HttpPost, Route("create")]
+        public IActionResult Create(CreatePostRequest post )
+        {
+            return View();
+        }
+
+        // The CreatePostRequest class defines the Post fields to be used when 
+        // creating a new post.
+        public class CreatePostRequest
+        {
+            public string Title { get; set; }
+            public string Body { get; set; }
+        }
+        */
+
+        // Alternatively you can whitelist properties of an object to be bound 
+        // to that instance when it is created.
+        /*
+        [HttpPost, Route("create")]
+        public IActionResult Create([Bind("Title", "Body")] Post post)
+        {
+            return View();
+        }
+        */
+
+        // Another alternative is to explicitly set the fields you no not want
+        // passed in from the user.
+        [HttpPost, Route("create")]
+        public IActionResult Create(Post post)
+        {
+            post.Author = User.Identity.Name;
+            post.Posted = DateTime.Now;
+
             return View();
         }
     }
