@@ -1,0 +1,30 @@
+﻿@* Define the model which will be used by this view. *@
+@model LearningAspDotNetCoreMVC.Models.Post
+
+@{
+    // This variable indicates the shared layout to use for this page.
+    Layout = "_Layout";
+}
+
+<h1>Create Blog Post</h1>
+
+<fieldset>
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.LabelFor(x => x.Title)
+            @* When using the EditorFor method ASP.NET automatically chooses the
+               most relevant input type to render to the page. *@
+            @Html.EditorFor(x => x.Title)
+        </p>
+        <p>
+            @Html.LabelFor(x => x.Body)
+            @* Alternatively, you can specify the input type by using a more 
+               specific method such as TextAreaFor. *@
+            @Html.TextAreaFor(x => x.Body)
+        </p>
+        <p>
+            <button type="submit">Create Post</button>
+        </p>
+    }
+</fieldset>
