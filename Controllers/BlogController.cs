@@ -37,11 +37,21 @@ namespace LearningAspDotNetCoreMVC.Controllers
         [Route("{year:min(2000)}/{month:range(1,12)}/{key}")]
         public IActionResult Post(int year, int month, string key)
         {
+            // ViewBag allows content to be passed into views as key value pairs within
+            // a ViewBag dynamic object. This is convenient, but is not strictly typed. 
+            ViewBag.Title = "My Blog Post";
+            ViewBag.Posted = DateTime.Now;
+            ViewBag.Author = "Jess Chadwick";
+            ViewBag.Body = "This is a great blog post, don't you think?";
             
+            /*
             return new ContentResult
             {
                 Content = string.Format("Year: {0}; Month: {1}; Key {2}", year, month, key)
             };
+            */
+
+            return View();
         }
     }
 }
