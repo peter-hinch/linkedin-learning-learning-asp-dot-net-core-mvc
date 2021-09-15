@@ -27,8 +27,10 @@ namespace LearningAspDotNetCoreMVC.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            //return new ContentResult { Content = "Blog Posts" };
-            return View();
+            // Read the most recent 5 posts from the database.
+            var posts = _db.Posts.OrderByDescending(x => x.Posted).Take(5).ToArray();
+
+            return View(posts);
         }
 
         // Passes the string from the URL in the 'id' portion to the action method:
@@ -47,6 +49,20 @@ namespace LearningAspDotNetCoreMVC.Controllers
         [Route("{year:min(2000)}/{month:range(1,12)}/{key}")]
         public IActionResult Post(int year, int month, string key)
         {
+            var post = _db.Posts.FirstOrDefault(x => x.Key == key);
+
+            // Creating a new instance of the Post class allows us to add the same data
+            // as previously added using ViewBag, but it is now strongly typed.
+            /*
+            var post = new Post
+            {
+                Title = "My blog post",
+                Posted = DateTime.Now,
+                Author = "Jess Chadwick",
+                Body = "This is a great blog post, don't you think?"
+            };
+            */
+
             // ViewBag allows content to be passed into views as key value pairs within
             // a ViewBag dynamic object. This is convenient, but is not strongly typed. 
             /*
@@ -55,16 +71,6 @@ namespace LearningAspDotNetCoreMVC.Controllers
             ViewBag.Author = "Jess Chadwick";
             ViewBag.Body = "This is a great blog post, don't you think?";
             */
-
-            // Creating a new instance of the Post class allows us to add the same data
-            // as previously added using ViewBag, but it is now strongly typed.
-            var post = new Post
-            {
-                Title = "My blog post",
-                Posted = DateTime.Now,
-                Author = "Jess Chadwick",
-                Body = "This is a great blog post, don't you think?"
-            };
 
             /*
             return new ContentResult
@@ -133,7 +139,12 @@ namespace LearningAspDotNetCoreMVC.Controllers
             _db.Posts.Add(post);
             _db.SaveChanges();
 
-            return View();
+            return RedirectToAction("Post", "Blog", new
+            {
+                year = post.Posted.Year,
+                month = post.Posted.Month,
+                key = post.Key
+            });
         }
     }
 }
