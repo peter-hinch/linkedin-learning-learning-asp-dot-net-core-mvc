@@ -7,11 +7,15 @@
 }
 
 <article class="blog-post">
-    <h1>@Model.Title</h1>
+    <h1>
+        @Html.ActionLink(post.Title, "Post", "Blog",
+            new { year = post.Posted.Year, month = post.Posted.Month, key = post.Key }
+        )
+    </h1>
     <div class="details">
-        Posted <span>@Model.Posted</span> by <span>@Model.Author</span>
+        Posted <span>@post.Posted</span> by <span>@post.Author</span>
     </div>
     <div class="content">
-        @Model.Body
+        @post.Body
     </div>
 </article>
