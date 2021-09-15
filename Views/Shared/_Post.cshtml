@@ -1,4 +1,9 @@
-﻿@* Define the model which will be used by this view. *@
+﻿@* Injection of a custom HtmlHelper defined in the FormattingServices Model -
+   1st parameter - the type to be injected
+   2nd parameter - the name of the property to create *@
+@inject LearningAspDotNetCoreMVC.Models.FormattingService Format
+
+@* Define the model which will be used by this view. *@
 @model LearningAspDotNetCoreMVC.Models.Post
 
 <article class="blog-post">
@@ -8,7 +13,8 @@
         )
     </h1>
     <div class="details">
-        Posted <span>@Model.Posted</span> by <span>@Model.Author</span>
+        @* Here the custom HtmlHelper is called using 'Format'*@
+        Posted <span>@Format.AsReadableDate(Model.Posted)</span> by <span>@Model.Author</span>
     </div>
     <div class="content">
         @Model.Body

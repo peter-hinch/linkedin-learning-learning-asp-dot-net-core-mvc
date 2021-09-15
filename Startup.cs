@@ -20,10 +20,15 @@ namespace LearningAspDotNetCoreMVC
         {
             this.configuration = configuration;
         }
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        // This method gets called by the runtime. Use this method to add services
+        // to the container. For more information on how to configure your
+        // application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // To use the FormattingServices injectable service, it must be
+            // configured here first. 
+            services.AddTransient<FormattingService>();
+            
             // To tell ASP.NET how to instantiate the FeatureToggles class, use
             // the AddScoped, AddSingleton or AddTransient methods when configuring
             // the service:
