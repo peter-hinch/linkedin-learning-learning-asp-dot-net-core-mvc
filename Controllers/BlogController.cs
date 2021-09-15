@@ -12,6 +12,15 @@ namespace LearningAspDotNetCoreMVC.Controllers
     [Route("blog")]
     public class BlogController : Controller
     {
+        private readonly BlogDataContext _db;
+
+        // Insert an instance of the database context into the BlogController
+        // constructor.
+        public BlogController(BlogDataContext db)
+        {
+            _db = db;
+        }
+        
         // Action methods with no custom route will not be affected by the custom
         // route at the contoller level. To use the controller level prefix, 
         // specify a custom route with an empty string.
@@ -120,6 +129,9 @@ namespace LearningAspDotNetCoreMVC.Controllers
             // Overwrite the fields that we do not wish the user to set themselves.
             post.Author = User.Identity.Name;
             post.Posted = DateTime.Now;
+
+            _db.Posts.Add(post);
+            _db.SaveChanges();
 
             return View();
         }
