@@ -3,14 +3,14 @@
 
 <article class="blog-post">
     <h1>
-        @Html.ActionLink(post.Title, "Post", "Blog",
-            new { year = post.Posted.Year, month = post.Posted.Month, key = post.Key }
+        @Html.ActionLink(Model.Title, "Post", "Blog",
+            new { year = Model.Posted.Year, month = Model.Posted.Month, key = Model.Key }
         )
     </h1>
     <div class="details">
-        Posted <span>@post.Posted</span> by <span>@post.Author</span>
+        Posted <span>@Model.Posted</span> by <span>@Model.Author</span>
     </div>
     <div class="content">
-        @post.Body
+        @Model.Body
     </div>
 </article>
