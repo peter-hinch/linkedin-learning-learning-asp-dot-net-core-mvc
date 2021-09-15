@@ -25,7 +25,7 @@
 
         <!-- Form validation summary using TagHelper -->
         <!-- The summary is customisable - All, ModelOnly and None are accepted -->
-        <div asp-validation-summary="All" class="input-validation-error"></div>
+        <div asp-validation-summary="ModelOnly" class="input-validation-error"></div>
 
         <p>
             @* When using HtmlHelper, form fields can be defined as follows:*@
@@ -57,10 +57,8 @@
 
             <!-- Fields defined using TagHelper more closely resemble HTML syntax -->
             <label asp-for="Body"></label>
-            <input asp-for="Body" class="form-control" placeholder="Blog post content" />
+            <textarea asp-for="Body" class="form-control" placeholder="Blog post content"></textarea>
             <span asp-validation-for="Body"></span>
-
-
         </p>
         <p>
             <!-- There is no ASP.NET equivalent syntax for a button, it remains 

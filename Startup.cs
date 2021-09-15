@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using LearningAspDotNetCoreMVC.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +34,16 @@ namespace LearningAspDotNetCoreMVC
             // We use an anonymous function to obtain the configuration data
             services.AddTransient<FeatureToggles>(x => new FeatureToggles
             {
-                DeveloperExceptions = configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
+                DeveloperExceptions =
+                    configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
+            });
+
+            services.AddDbContext<BlogDataContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("BlogDataContext");
+                // UseSqlServer requires installation of the NuGet package
+                // Microsoft.EntityFrameworkCore.SqlServer .
+                options.UseSqlServer(connectionString);
             });
 
             // Register the MCV design pattern.
