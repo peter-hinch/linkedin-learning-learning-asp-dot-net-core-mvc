@@ -15,18 +15,9 @@
 <div class="blog-posts">
     @foreach (var post in Model)
     {
-        <article class="blog-post">
-            <h1>
-                @Html.ActionLink(post.Title, "Post", "Blog",
-                    new { year = post.Posted.Year, month = post.Posted.Month, key = post.Key }
-                )
-            </h1>
-            <div class="details">
-                Posted <span>@post.Posted</span> by <span>@post.Author</span>
-            </div>
-            <div class="content">
-                @post.Body
-            </div>
-        </article>
+        @* Insert a partial view using the following syntax. It is an asynchronous
+           method so await must be used. Here it is overloaded with a second
+           parameter to pass the var 'post' instead of the 'Model'. *@
+        @await Html.PartialAsync("_Post", post)
     }
 </div>

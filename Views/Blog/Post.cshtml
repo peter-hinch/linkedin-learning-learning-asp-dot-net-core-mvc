@@ -6,16 +6,6 @@
     Layout = "_Layout";
 }
 
-<article class="blog-post">
-    <h1>
-        @Html.ActionLink(Model.Title, "Post", "Blog",
-            new { year = Model.Posted.Year, month = Model.Posted.Month, key = Model.Key }
-        )
-    </h1>
-    <div class="details">
-        Posted <span>@Model.Posted</span> by <span>@Model.Author</span>
-    </div>
-    <div class="content">
-        @Model.Body
-    </div>
-</article>
+@* Insert a partial view using the following syntax. It is an asynchronous method
+   so await must be used.*@
+@await Html.PartialAsync("_Post")
