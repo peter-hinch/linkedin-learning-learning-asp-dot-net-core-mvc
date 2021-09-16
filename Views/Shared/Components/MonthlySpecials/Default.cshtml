@@ -1,0 +1,19 @@
+﻿@model IEnumerable<LearningAspDotNetCoreMVC.Models.MonthlySpecial>
+@* Note: Views for ViewComponents can be shared or page / controller specific:
+    - Views/<Controller>/Components/<ComponentName>/Default.cshtml
+    - Views/Shared/Components/<ComponentName>/Default.cshtml (as seen here)
+    - Pages/Shared/Components/<ComponentName>/Default.cshtml*@
+
+<h1>Monthly Specials</h1>
+
+@foreach (var special in Model)
+{
+    <h2 class="top">
+        <img src="/images/@(special.Key)_bug.gif" alt="@special.Name" width="75" height="75" />
+        @special.Name
+    </h2>
+    <p>
+        @special.Type <br />
+        <a href="/tours/@(special.Key).htm">$@special.Price</a>
+    </p>
+}

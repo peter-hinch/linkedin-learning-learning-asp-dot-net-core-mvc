@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LearningAspDotNetCoreMVC.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,21 @@ namespace LearningAspDotNetCoreMVC.ViewComponents
     [ViewComponent]
     public class MonthlySpecialsViewComponent : ViewComponent
     {
-        // Declare a public method named Invoke that returns a string.
-        public string Invoke()
+        // Inject the BlogDataContext into MonthlySpecialsViewComponent
+        private readonly BlogDataContext db;
+
+        public MonthlySpecialsViewComponent(BlogDataContext db)
         {
-            return "TODO: Show monthly specials";
+            this.db = db;
+        }
+        
+        // Declare a public method named Invoke that returns an IViewComponent
+        // result.
+        public IViewComponentResult Invoke()
+        {
+            // Populate the view with the specials contained in BlogDataContext.
+            var specials = db.MonthlySpecials.ToArray();
+            return View(specials);
         }
     }
 }
