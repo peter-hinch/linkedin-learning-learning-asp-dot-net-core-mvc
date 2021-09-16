@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace LearningAspDotNetCoreMVC
 {
@@ -43,6 +44,7 @@ namespace LearningAspDotNetCoreMVC
                     configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
             });
 
+            // Configure the database context for BlogDbContext
             services.AddDbContext<BlogDataContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("BlogDataContext");
@@ -50,6 +52,17 @@ namespace LearningAspDotNetCoreMVC
                 // Microsoft.EntityFrameworkCore.SqlServer .
                 options.UseSqlServer(connectionString);
             });
+            
+            // Configure the database context for IdentityDbContext
+            services.AddDbContext<IdentityDataContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("BlogDataContext");
+                options.UseSqlServer(connectionString);
+            });
+
+            // Configure the Identity frsmework
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDataContext>();
 
             // Register the MCV design pattern.
             services.AddMvc();
@@ -95,6 +108,14 @@ namespace LearningAspDotNetCoreMVC
                 }
                 await next();
             });
+
+            // Register the Identity framework to allow authorization functionality.
+            // This must be placed before mvc / routing.
+            // Note: This requires installation of the NuGet package 
+            // Microsoft.AspNetCore.Identity.EntityFrameworkCore .
+            // In .NET Core 5.0, UseAuthentication() method replaces UseIdentity() .
+            // Reference: https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x?view=aspnetcore-5.0
+            app.UseAuthentication();
 
             // Assign the URL to be mapped when accessing the MVC pages
             // - differs from course, using code from class instead.

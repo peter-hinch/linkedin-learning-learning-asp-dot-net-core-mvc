@@ -1,4 +1,5 @@
 ﻿using LearningAspDotNetCoreMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -111,6 +112,8 @@ namespace LearningAspDotNetCoreMVC.Controllers
         // Adding the decorator keyword HttpGet signifies this action method will
         // handle GET requests to this method. The parameters will still need to 
         // be different for each action method for the application to compile.
+        // The Authorize decorator ensures only authorized users can access the method.
+        [Authorize]
         [HttpGet, Route("create")]
         public IActionResult Create()
         {
@@ -148,6 +151,8 @@ namespace LearningAspDotNetCoreMVC.Controllers
 
         // Another alternative is to explicitly set the fields you no not want
         // passed in from the user.
+        // The Authorize decorator ensures only authorized users can access the method.
+        [Authorize]
         [HttpPost, Route("create")]
         public IActionResult Create(Post post)
         {
