@@ -25,10 +25,36 @@ namespace LearningAspDotNetCoreMVC.Controllers
         // route at the contoller level. To use the controller level prefix, 
         // specify a custom route with an empty string.
         [Route("")]
-        public IActionResult Index()
+        public IActionResult Index(int page = 0)
         {
-            // Read the most recent 5 posts from the database.
-            var posts = _db.Posts.OrderByDescending(x => x.Posted).Take(5).ToArray();
+            // Declaration of variables to facilitate pagination of Index.
+            var pageSize = 2;
+            var totalPosts = _db.Posts.Count();
+            var totalPages = totalPosts / pageSize;
+            var previousPage = page - 1;
+            var nextPage = page + 1;
+
+            // Properties to pass to the ViewBag to define pagination behaviour.
+            ViewBag.PreviousPage = previousPage;
+            ViewBag.HasPreviousPage = previousPage >= 0;
+            ViewBag.NextPage = nextPage;
+            ViewBag.HasNextPage = nextPage < totalPages;
+
+            // Obtain posts from the database for display.
+            var posts =
+                _db.Posts
+                    .OrderByDescending(x => x.Posted)
+                    .Skip(pageSize * page)
+                    .Take(pageSize)
+                    .ToArray();
+
+            // Check whether the page was called via an AJAX request. If so, 
+            // render only the partial view (new content). This prevents the
+            // shared layout from being rendered again inside the page.
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView(posts);
+            }
 
             return View(posts);
         }
