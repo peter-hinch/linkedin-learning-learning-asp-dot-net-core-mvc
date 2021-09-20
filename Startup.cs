@@ -68,6 +68,7 @@ namespace LearningAspDotNetCoreMVC
             // 3. In the package manager console:
             // 3a. - 'enable-migrations'
             // 3b. - 'add-migration InitialCreate -context IdentityDataContext'
+            // 3c. - Check that tables have been created successfully in the db.
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDataContext>();
