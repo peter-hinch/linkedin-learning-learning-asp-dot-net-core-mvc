@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace LearningAspDotNetCoreMVC.Models
 {
-    // Database context for Identity framework
+    // Database context for Identity framework.
+    // Extending IdentityDbContext provides the structure to create the required
+    // database stucture for the framework upon the initial database migration.
     public class IdentityDataContext : IdentityDbContext<IdentityUser>
     {
         public IdentityDataContext(DbContextOptions<IdentityDataContext> options)
