@@ -60,7 +60,15 @@ namespace LearningAspDotNetCoreMVC
                 options.UseSqlServer(connectionString);
             });
 
-            // Configure the Identity frsmework
+            // Configure the Identity framework
+            // Before using the Identity Framework, the corresponding tables need
+            // to be generated via database migration:
+            // 1. Ensure NuGet package Microsoft.EntityFrameworkCore.Tools is added.
+            // 2. Change the connection string to point to a new DB.
+            // 3. In the package manager console:
+            // 3a. - 'enable-migrations'
+            // 3b. - 'add-migration InitialCreate -context IdentityDataContext'
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDataContext>();
 
